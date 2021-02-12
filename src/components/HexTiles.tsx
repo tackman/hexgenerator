@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Container } from "@inlet/react-pixi";
 import { Texture } from "pixi.js";
 import {
@@ -22,124 +22,72 @@ type Props = {
 };
 
 export function HexTiles(props: Props) {
-  return (
-    <Container>
-      <UpperRightEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={0}
-        texture={props.texture}
-      />
-      <UpperLeftEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={1}
-        texture={props.texture}
-      />
-      <UpperLeftEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={0}
-        texture={props.texture}
-      />
-      <UpperRightEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={1}
-        texture={props.texture}
-      />
-      <VerticalLeftEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={1}
-        texture={props.texture}
-      />
-      <VerticalLeftEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={0}
-        texture={props.texture}
-      />
-      <VerticalLeftEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={2}
-        texture={props.texture}
-      />
-      <VerticalLeftEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={3}
-        texture={props.texture}
-      />
-      <BottomRightEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={1}
-        texture={props.texture}
-      />
-      <BottomRightEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={0}
-        texture={props.texture}
-      />
-      <BottomLeftEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={1}
-        texture={props.texture}
-      />
-      <BottomLeftEdgeRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={0}
-        texture={props.texture}
-      />
-      <UpperVertexRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={1}
-        texture={props.vertexTexture}
-      />
+  const hexHeight = 2 * props.spriteWidth + props.spriteHeight;
+  const rowsCount = Math.ceil(props.stageHeight / hexHeight);
 
-      <LowerVertexRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={1}
-        texture={props.vertexTexture}
-      />
-      <UpperVertexRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={0}
-        texture={props.vertexTexture}
-      />
+  const edgeRows: Array<ReactElement> = [];
 
-      <LowerVertexRow
-        stageWidth={props.stageWidth}
-        spriteHeight={props.spriteHeight}
-        spriteWidth={props.spriteWidth}
-        line={0}
-        texture={props.vertexTexture}
-      />
-    </Container>
-  );
+  for (let i = 0; i < rowsCount; ++i) {
+    const row = (
+      <Container>
+        <UpperRightEdgeRow
+          stageWidth={props.stageWidth}
+          spriteHeight={props.spriteHeight}
+          spriteWidth={props.spriteWidth}
+          line={i}
+          texture={props.texture}
+        />
+        <UpperLeftEdgeRow
+          stageWidth={props.stageWidth}
+          spriteHeight={props.spriteHeight}
+          spriteWidth={props.spriteWidth}
+          line={i}
+          texture={props.texture}
+        />
+        <BottomRightEdgeRow
+          stageWidth={props.stageWidth}
+          spriteHeight={props.spriteHeight}
+          spriteWidth={props.spriteWidth}
+          line={i}
+          texture={props.texture}
+        />
+        <BottomLeftEdgeRow
+          stageWidth={props.stageWidth}
+          spriteHeight={props.spriteHeight}
+          spriteWidth={props.spriteWidth}
+          line={i}
+          texture={props.texture}
+        />
+        <VerticalLeftEdgeRow
+          stageWidth={props.stageWidth}
+          spriteHeight={props.spriteHeight}
+          spriteWidth={props.spriteWidth}
+          line={i}
+          texture={props.texture}
+        />
+
+        <UpperVertexRow
+          stageWidth={props.stageWidth}
+          spriteHeight={props.spriteHeight}
+          spriteWidth={props.spriteWidth}
+          line={i}
+          texture={props.vertexTexture}
+        />
+
+        <LowerVertexRow
+          stageWidth={props.stageWidth}
+          spriteHeight={props.spriteHeight}
+          spriteWidth={props.spriteWidth}
+          line={i}
+          texture={props.vertexTexture}
+        />
+      </Container>
+    );
+
+    edgeRows.push(row);
+  }
+
+  return <Container>{edgeRows}</Container>;
 }
 
 type VrowProps = {

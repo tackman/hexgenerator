@@ -11,6 +11,10 @@ const App = () => {
     Texture.from("./edge-sample.png")
   );
 
+  const [vertextTexture, setVertexTexture] = useState<Texture>(
+    Texture.from("./vert-sample.png")
+  );
+
   const [stageWidth, setStageWidth] = useState<number>(1200);
   const [stageHeihgt, setStageHeight] = useState<number>(800);
 
@@ -26,19 +30,30 @@ const App = () => {
           img.height,
           {}
         );
-        setEdgeTexture(texture);
+
+        if (event.target.id === "input-edge-texture") {
+          setEdgeTexture(texture);
+        } else if (event.target.id === "input-vertex-texture") {
+          //        setVertexTexture(texture)
+        }
       });
     }
   };
 
   return (
     <div>
-      <input id="input" type="file" onChange={loadTextureImage} />
+      <input id="input-edge-texture" type="file" onChange={loadTextureImage} />
+      <input
+        id="input-vertex-texture"
+        type="file"
+        onChange={loadTextureImage}
+      />
       <Stage width={stageWidth} height={stageHeihgt}>
         <HexTiles
           spriteHeight={20}
-          spriteWidth={200}
+          spriteWidth={100}
           texture={edgeTexture}
+          vertexTexture={vertextTexture}
           stageWidth={stageWidth}
           stageHeight={stageHeihgt}
         />

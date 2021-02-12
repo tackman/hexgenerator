@@ -45,6 +45,14 @@ const App = () => {
     }
   };
 
+  const download = () => {
+    const canvas = document.getElementsByTagName("canvas").item(0);
+    if (canvas) {
+      const data = canvas.toDataURL();
+      window.open(data, "_blank");
+    }
+  };
+
   return (
     <div>
       <label>Edge texture</label>
@@ -77,7 +85,13 @@ const App = () => {
           setStageHeight(Number.parseInt(e.target.value));
         }}
       />
-      <Stage width={stageWidth} height={stageHeihgt}>
+
+      <button onClick={download}>Download</button>
+      <Stage
+        width={stageWidth}
+        height={stageHeihgt}
+        options={{ transparent: true, preserveDrawingBuffer: true }}
+      >
         <HexTiles
           spriteHeight={20}
           spriteWidth={100}

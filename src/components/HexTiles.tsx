@@ -317,11 +317,11 @@ function BottomRightEdgeRow(props: VrowProps) {
 }
 
 function VerticalLeftEdgeRow(props: VrowProps) {
-  const hexHeight = 2 * props.spriteWidth + props.spriteHeight;
   const y =
     1.5 * props.spriteWidth +
-    0.75 * props.line * hexHeight +
-    props.spriteHeight;
+    (Math.sqrt(3) * props.spriteHeight) / 2 +
+    props.line *
+      (1.5 * props.spriteWidth + (Math.sqrt(3) * props.spriteHeight) / 2);
 
   const innerHexWidth = Math.sqrt(3) * props.spriteWidth;
   const hexWidth = innerHexWidth + props.spriteHeight;

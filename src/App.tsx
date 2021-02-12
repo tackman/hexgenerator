@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Stage, Sprite } from "@inlet/react-pixi";
+import { Stage } from "@inlet/react-pixi";
 import * as UPNG from "upng-js";
 import { Texture } from "pixi.js";
-import { HexEdge, Angles } from "./components/HexEdge";
 import { HexTiles } from "./components/HexTiles";
 
 const App = () => {
@@ -34,7 +33,7 @@ const App = () => {
         if (event.target.id === "input-edge-texture") {
           setEdgeTexture(texture);
         } else if (event.target.id === "input-vertex-texture") {
-          //        setVertexTexture(texture)
+          setVertexTexture(texture);
         }
       });
     }
@@ -47,6 +46,26 @@ const App = () => {
         id="input-vertex-texture"
         type="file"
         onChange={loadTextureImage}
+      />
+
+      <label>width</label>
+      <input
+        id="input-stage-width"
+        type="number"
+        value={stageWidth}
+        onChange={(e) => {
+          setStageWidth(Number.parseInt(e.target.value));
+        }}
+      />
+
+      <label>height</label>
+      <input
+        id="input-stage-width"
+        type="number"
+        value={stageHeihgt}
+        onChange={(e) => {
+          setStageHeight(Number.parseInt(e.target.value));
+        }}
       />
       <Stage width={stageWidth} height={stageHeihgt}>
         <HexTiles

@@ -100,12 +100,14 @@ type VrowProps = {
 
 function UpperVertexRow(props: VrowProps) {
   const yHigh =
-    props.line * (3 * props.spriteWidth + 1.5 * props.spriteHeight) +
+    props.line *
+      (3 * props.spriteWidth + (2 * Math.sqrt(3) * props.spriteHeight) / 2) +
     props.spriteHeight / 2;
   const yLow =
     0.5 * props.spriteWidth +
     props.spriteHeight / 2 +
-    props.line * (3 * props.spriteWidth + 1.5 * props.spriteHeight);
+    props.line *
+      (3 * props.spriteWidth + (2 * Math.sqrt(3) * props.spriteHeight) / 2);
   const innerHexWidth = Math.sqrt(3) * props.spriteWidth;
   const hexWidth = innerHexWidth + props.spriteHeight;
 
@@ -144,12 +146,14 @@ function UpperVertexRow(props: VrowProps) {
 function LowerVertexRow(props: VrowProps) {
   const yHigh =
     1.5 * props.spriteWidth +
-    1.5 * props.spriteHeight +
-    props.line * (3 * props.spriteWidth + 1.5 * props.spriteHeight);
+    (1.5 * props.spriteHeight * Math.sqrt(3)) / 2 +
+    props.line *
+      (3 * props.spriteWidth + (2 * Math.sqrt(3) * props.spriteHeight) / 2);
   const yLow =
     2 * props.spriteWidth +
-    1.5 * props.spriteHeight +
-    props.line * (3 * props.spriteWidth + Math.sqrt(3) * props.spriteHeight);
+    (1.5 * props.spriteHeight * Math.sqrt(3)) / 2 +
+    props.line *
+      (3 * props.spriteWidth + (2 * Math.sqrt(3) * props.spriteHeight) / 2);
   const innerHexWidth = Math.sqrt(3) * props.spriteWidth;
   const hexWidth = innerHexWidth + props.spriteHeight;
 

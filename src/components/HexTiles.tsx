@@ -11,12 +11,14 @@ import {
 } from "./HexEdge";
 
 import { HexVertexUp, HexVertexDown } from "./HexVertex";
+import { HexBody } from "./HexBody";
 
 type Props = {
   spriteWidth: number;
   spriteHeight: number;
   texture: Texture;
   vertexTexture: Texture;
+  bodyTexture: Texture;
   stageWidth: number;
   stageHeight: number;
 };
@@ -81,6 +83,14 @@ export function HexTiles(props: Props) {
           line={i}
           texture={props.vertexTexture}
         />
+
+        <HexBodyRow
+          stageWidth={props.stageWidth}
+          spriteHeight={props.spriteHeight}
+          spriteWidth={props.spriteWidth}
+          line={i}
+          texture={props.bodyTexture}
+        />
       </Container>
     );
 
@@ -97,6 +107,46 @@ type VrowProps = {
   line: number;
   texture: Texture;
 };
+
+function HexBodyRow(props: VrowProps) {
+  const y =
+    props.spriteWidth +
+    (Math.sqrt(3) * props.spriteHeight) / 2 +
+    props.line *
+      (1.5 * props.spriteWidth + (Math.sqrt(3) * props.spriteHeight) / 2);
+
+  const innerHexWidth = Math.sqrt(3) * props.spriteWidth;
+  const hexWidth = innerHexWidth + props.spriteHeight;
+
+  const edgeCount = Math.floor((2 * props.stageWidth) / hexWidth);
+
+  const ary = [];
+  for (let i = 0; i < edgeCount; ++i) {
+    ary.push(i);
+  }
+
+  const width = Math.sqrt(3) * props.spriteWidth;
+  const height = 2 * props.spriteWidth;
+
+  const tiles = ary.map((n) => {
+    const x =
+      props.spriteHeight +
+      (Math.sqrt(3) * props.spriteWidth) / 2 +
+      hexWidth * n +
+      ((props.line % 2) * hexWidth) / 2;
+    return (
+      <HexBody
+        texture={props.texture}
+        y={y}
+        x={x}
+        width={width}
+        height={height}
+      />
+    );
+  });
+
+  return <Container>{tiles}</Container>;
+}
 
 function UpperVertexRow(props: VrowProps) {
   const yHigh =

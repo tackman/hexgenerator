@@ -14,8 +14,12 @@ const App = () => {
     Texture.from("./vert-sample.png")
   );
 
+  const [bodyTexture, setBodyTexture] = useState<Texture>(
+    Texture.from("./tile-sample.png")
+  );
+
   const [stageWidth, setStageWidth] = useState<number>(1200);
-  const [stageHeihgt, setStageHeight] = useState<number>(800);
+  const [stageHeihgt, setStageHeight] = useState<number>(1800);
 
   const loadTextureImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const f = event.target.files ? event.target.files[0] : null;
@@ -34,6 +38,8 @@ const App = () => {
           setEdgeTexture(texture);
         } else if (event.target.id === "input-vertex-texture") {
           setVertexTexture(texture);
+        } else if (event.target.id === "input-body-texture") {
+          setBodyTexture(texture);
         }
       });
     }
@@ -41,12 +47,16 @@ const App = () => {
 
   return (
     <div>
+      <label>Edge texture</label>
       <input id="input-edge-texture" type="file" onChange={loadTextureImage} />
+      <label>Vertex texture</label>
       <input
         id="input-vertex-texture"
         type="file"
         onChange={loadTextureImage}
       />
+      <label>Tile texture</label>
+      <input id="input-body-texture" type="file" onChange={loadTextureImage} />
 
       <label>width</label>
       <input
@@ -75,6 +85,7 @@ const App = () => {
           vertexTexture={vertextTexture}
           stageWidth={stageWidth}
           stageHeight={stageHeihgt}
+          bodyTexture={bodyTexture}
         />
       </Stage>
     </div>

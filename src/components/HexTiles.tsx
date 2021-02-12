@@ -29,7 +29,8 @@ export function HexTiles(props: Props) {
 
   const edgeRows: Array<ReactElement> = [];
 
-  for (let i = 0; i < rowsCount; ++i) {
+  let i = 0;
+  for (i = 0; i < rowsCount; ++i) {
     const row = (
       <Container>
         <UpperRightEdgeRow
@@ -96,6 +97,27 @@ export function HexTiles(props: Props) {
 
     edgeRows.push(row);
   }
+
+  const tailRow = (
+    <Container>
+      <VerticalLeftEdgeRow
+        stageWidth={props.stageWidth}
+        spriteHeight={props.spriteHeight}
+        spriteWidth={props.spriteWidth}
+        line={i}
+        texture={props.texture}
+      />
+      <HexBodyRow
+        stageWidth={props.stageWidth}
+        spriteHeight={props.spriteHeight}
+        spriteWidth={props.spriteWidth}
+        line={i}
+        texture={props.bodyTexture}
+      />
+    </Container>
+  );
+
+  edgeRows.push(tailRow);
 
   return <Container>{edgeRows}</Container>;
 }

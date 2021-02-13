@@ -20,6 +20,8 @@ const App = () => {
 
   const [stageWidth, setStageWidth] = useState<number>(1200);
   const [stageHeihgt, setStageHeight] = useState<number>(1800);
+  const [edgeWidth, setEdgeWidth] = useState<number>(100);
+  const [edgeHeight, setEdgeHeight] = useState<number>(20);
 
   const loadTextureImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const f = event.target.files ? event.target.files[0] : null;
@@ -66,7 +68,26 @@ const App = () => {
       <label>Tile texture</label>
       <input id="input-body-texture" type="file" onChange={loadTextureImage} />
 
-      <label>width</label>
+      <label>Edge width</label>
+      <input
+        id="input-stage-width"
+        type="number"
+        value={edgeWidth}
+        onChange={(e) => {
+          setEdgeWidth(Number.parseInt(e.target.value));
+        }}
+      />
+      <label>Edge height</label>
+      <input
+        id="input-stage-width"
+        type="number"
+        value={edgeHeight}
+        onChange={(e) => {
+          setEdgeHeight(Number.parseInt(e.target.value));
+        }}
+      />
+
+      <label>Image width</label>
       <input
         id="input-stage-width"
         type="number"
@@ -76,7 +97,7 @@ const App = () => {
         }}
       />
 
-      <label>height</label>
+      <label>Image height</label>
       <input
         id="input-stage-width"
         type="number"
@@ -93,8 +114,8 @@ const App = () => {
         options={{ transparent: true, preserveDrawingBuffer: true }}
       >
         <HexTiles
-          spriteHeight={20}
-          spriteWidth={100}
+          spriteHeight={edgeHeight}
+          spriteWidth={edgeWidth}
           texture={edgeTexture}
           vertexTexture={vertextTexture}
           stageWidth={stageWidth}

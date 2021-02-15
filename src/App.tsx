@@ -4,6 +4,11 @@ import { Stage } from "@inlet/react-pixi";
 import * as UPNG from "upng-js";
 import { Texture } from "pixi.js";
 import { HexTiles } from "./components/HexTiles";
+import * as streamSaver from "streamsaver";
+import * as ponyfill from "web-streams-polyfill/ponyfill";
+
+// @ts-ignore
+streamSaver.WritableStream = ponyfill.WritableStream;
 
 const App = () => {
   const [edgeTexture, setEdgeTexture] = useState<Texture>(
@@ -50,8 +55,26 @@ const App = () => {
   const download = () => {
     const canvas = document.getElementsByTagName("canvas").item(0);
     if (canvas) {
-      const data = canvas.toDataURL();
-      window.open(data, "_blank");
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const ws = streamSaver.createWriteStream("hexmap.png", {
+            size: blob.size,
+          });
+          const reader = blob.stream().getReader();
+          const writer = ws.getWriter();
+
+          const pump = (): unknown =>
+            reader
+              .read()
+              .then((res) =>
+                res.done ? writer.close() : writer.write(res.value).then(pump)
+              );
+
+          pump();
+        } else {
+          console.error("Failed to create Canvas blob");
+        }
+      });
     }
   };
 
